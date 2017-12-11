@@ -42,4 +42,9 @@ public class FavoritesFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.title_favorites);
     }
+
+    @Override
+    protected void makeApiCall(int requestCode, Bundle params) {
+
+    }
 }
