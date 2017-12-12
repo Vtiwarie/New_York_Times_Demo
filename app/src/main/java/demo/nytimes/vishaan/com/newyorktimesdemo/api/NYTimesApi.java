@@ -1,8 +1,6 @@
 package demo.nytimes.vishaan.com.newyorktimesdemo.api;
 
-import java.util.List;
-
-import demo.nytimes.vishaan.com.newyorktimesdemo.model.Movie;
+import demo.nytimes.vishaan.com.newyorktimesdemo.model.MovieReviewsObject;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -14,6 +12,6 @@ import retrofit2.http.Query;
 public interface NYTimesApi {
 
     @GET("svc/movies/v2/reviews/search.json")
-    Observable<List<Movie>> getMovieReviews(@Query("api-key") String query);
+    Observable<MovieReviewsObject> getMovieReviews(@Query("api-key") String query);
 }
 

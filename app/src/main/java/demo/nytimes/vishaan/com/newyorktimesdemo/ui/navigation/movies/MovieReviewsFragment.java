@@ -15,6 +15,7 @@ import demo.nytimes.vishaan.com.newyorktimesdemo.NYTimesApplication;
 import demo.nytimes.vishaan.com.newyorktimesdemo.R;
 import demo.nytimes.vishaan.com.newyorktimesdemo.api.NYTimesApi;
 import demo.nytimes.vishaan.com.newyorktimesdemo.model.Movie;
+import demo.nytimes.vishaan.com.newyorktimesdemo.model.MovieReviewsObject;
 import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.MoviePresenter;
 import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.interfaces.iMoviePresenterInterface;
 import demo.nytimes.vishaan.com.newyorktimesdemo.ui.base.BaseFragment;
@@ -49,10 +50,14 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //set title
         getActivity().setTitle(R.string.movie_reviews);
 
+        //inject dependencies with Dagger 2
         NYTimesApplication.getComponent().inject(MovieReviewsFragment.this);
 
+        //presentation
         moviePresenter = new MoviePresenter(MovieReviewsFragment.this);
         moviePresenter.onCreate();
     }
@@ -74,12 +79,12 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
     }
 
     @Override
-    public void onMovies(List<Movie> movieResponses) {
+    public void onMovies(MovieReviewsObject movieResponses) {
         Util.logDebug(getClass().getName(), movieResponses.toString());
     }
 
     @Override
-    public Observable<List<Movie>> getMovies() {
+    public Observable<MovieReviewsObject> getMovies() {
         return nyTimesApi.getMovieReviews(BuildConfig.API_KEY);
     }
 }

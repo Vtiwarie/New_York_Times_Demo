@@ -1,7 +1,5 @@
 package demo.nytimes.vishaan.com.newyorktimesdemo.presenter;
 
-import org.reactivestreams.Subscriber;
-
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

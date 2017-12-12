@@ -1,8 +1,6 @@
 package demo.nytimes.vishaan.com.newyorktimesdemo.presenter.interfaces;
 
-import java.util.List;
-
-import demo.nytimes.vishaan.com.newyorktimesdemo.model.Movie;
+import demo.nytimes.vishaan.com.newyorktimesdemo.model.MovieReviewsObject;
 import io.reactivex.Observable;
 
 /**
@@ -14,7 +12,7 @@ public interface iMoviePresenterInterface {
 
     void onError(String message);
 
-    void onMovies(List<Movie> movieResponses);
+    void onMovies(MovieReviewsObject movieResponses);
 
-    Observable<List<Movie>> getMovies();
+    Observable<MovieReviewsObject> getMovies();
 }

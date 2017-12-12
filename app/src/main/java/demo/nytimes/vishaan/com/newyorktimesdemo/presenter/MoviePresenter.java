@@ -1,13 +1,12 @@
 package demo.nytimes.vishaan.com.newyorktimesdemo.presenter;
 
-import java.util.List;
-
-import demo.nytimes.vishaan.com.newyorktimesdemo.model.Movie;
+import demo.nytimes.vishaan.com.newyorktimesdemo.model.MovieReviewsObject;
 import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.interfaces.iMoviePresenterInterface;
+import demo.nytimes.vishaan.com.newyorktimesdemo.ui.navigation.movies.MovieReviewsFragment;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class MoviePresenter extends BasePresenter implements Observer<List<Movie>> {
+public class MoviePresenter extends BasePresenter implements Observer<MovieReviewsObject> {
 
     private iMoviePresenterInterface iMoviePresenterInterface;
 
@@ -21,8 +20,8 @@ public class MoviePresenter extends BasePresenter implements Observer<List<Movie
     }
 
     @Override
-    public void onNext(List<Movie> movieResponse) {
-        iMoviePresenterInterface.onMovies(movieResponse);
+    public void onNext(MovieReviewsObject movieReviewsObject) {
+        iMoviePresenterInterface.onMovies(movieReviewsObject);
     }
 
     public void fetchMovies() {
