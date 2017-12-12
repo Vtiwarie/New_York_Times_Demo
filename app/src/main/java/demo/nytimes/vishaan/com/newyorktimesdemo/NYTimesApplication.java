@@ -18,9 +18,9 @@ public class NYTimesApplication extends Application {
     @Override public void onCreate() {
         super.onCreate();
         component = DaggerAppComponent.builder()
-                .nYTimesModule(new NYTimesModule())
                 .appModule(new AppModule(this))
                 .networkModule(new NetworkModule())
+                .nYTimesModule(new NYTimesModule())
                 .build();
     }
 

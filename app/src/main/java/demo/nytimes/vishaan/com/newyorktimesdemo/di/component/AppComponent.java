@@ -11,6 +11,7 @@ import demo.nytimes.vishaan.com.newyorktimesdemo.di.module.AppModule;
 import demo.nytimes.vishaan.com.newyorktimesdemo.di.module.NYTimesModule;
 import demo.nytimes.vishaan.com.newyorktimesdemo.di.module.NetworkModule;
 import demo.nytimes.vishaan.com.newyorktimesdemo.ui.navigation.NavigationActivity;
+import demo.nytimes.vishaan.com.newyorktimesdemo.ui.navigation.movies.MovieReviewsFragment;
 
 /**
  *
@@ -20,5 +21,5 @@ import demo.nytimes.vishaan.com.newyorktimesdemo.ui.navigation.NavigationActivit
 @Component(modules = {AppModule.class, NetworkModule.class, NYTimesModule.class})
 public interface AppComponent {
 
-    void inject(NavigationActivity activity);
+    void inject(MovieReviewsFragment fragment);
 }

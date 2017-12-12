@@ -6,13 +6,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import demo.nytimes.vishaan.com.newyorktimesdemo.BuildConfig;
+import demo.nytimes.vishaan.com.newyorktimesdemo.NYTimesApplication;
 import demo.nytimes.vishaan.com.newyorktimesdemo.R;
-import demo.nytimes.vishaan.com.newyorktimesdemo.classes.ServerManager;
+import demo.nytimes.vishaan.com.newyorktimesdemo.api.NYTimesApi;
+import demo.nytimes.vishaan.com.newyorktimesdemo.model.Movie;
+import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.MoviePresenter;
+import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.interfaces.iMoviePresenterInterface;
 import demo.nytimes.vishaan.com.newyorktimesdemo.ui.base.BaseFragment;
+import demo.nytimes.vishaan.com.newyorktimesdemo.utils.Util;
+import io.reactivex.Observable;
 
-public class MovieReviewsFragment extends BaseFragment {
+public class MovieReviewsFragment extends BaseFragment implements iMoviePresenterInterface {
+    @Inject
+    NYTimesApi nyTimesApi;
 
-    public static final int REQUEST_CODE_GET_MOVIE_REVIEWS = 0x0000;
+    private MoviePresenter moviePresenter;
 
     public MovieReviewsFragment() {
         // Required empty public constructor
@@ -37,14 +50,36 @@ public class MovieReviewsFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.movie_reviews);
-        makeApiCall(REQUEST_CODE_GET_MOVIE_REVIEWS, null);
+
+        NYTimesApplication.getComponent().inject(MovieReviewsFragment.this);
+
+        moviePresenter = new MoviePresenter(MovieReviewsFragment.this);
+        moviePresenter.onCreate();
     }
 
     @Override
-    protected void makeApiCall(int requestCode, Bundle params) {
-        switch (requestCode) {
-            case REQUEST_CODE_GET_MOVIE_REVIEWS:
-                break;
-        }
+    public void onStart() {
+        super.onStart();
+        moviePresenter.fetchMovies();
+    }
+
+    @Override
+    public void onCompleted() {
+        //do nothing for now
+    }
+
+    @Override
+    public void onError(String message) {
+        Util.logDebug(getClass().getName(), message);
+    }
+
+    @Override
+    public void onMovies(List<Movie> movieResponses) {
+        Util.logDebug(getClass().getName(), movieResponses.toString());
+    }
+
+    @Override
+    public Observable<List<Movie>> getMovies() {
+        return nyTimesApi.getMovieReviews(BuildConfig.API_KEY);
     }
 }
