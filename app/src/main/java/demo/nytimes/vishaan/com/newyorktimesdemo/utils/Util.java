@@ -14,4 +14,10 @@ public class Util {
             Log.d(tag, message);
         }
     }
+
+    public static void logError(String tag, String message) {
+        if(BuildConfig.DEBUG) {
+            Log.e(tag, message);
+        }
+    }
 }

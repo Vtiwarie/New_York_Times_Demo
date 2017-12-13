@@ -5,22 +5,31 @@ package demo.nytimes.vishaan.com.newyorktimesdemo.model;
  */
 
 public class Image {
-    private String type;
-    private String url;
+    private String src;
+    private int width;
+    private int height;
 
-    public String getType() {
-        return type;
+    public String getSrc() {
+        return src;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setSrc(String src) {
+        this.src = src;
     }
 
-    public String getUrl() {
-        return url;
+    public int getWidth() {
+        return width;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

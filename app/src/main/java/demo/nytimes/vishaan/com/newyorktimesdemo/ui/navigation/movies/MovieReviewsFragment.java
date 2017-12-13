@@ -2,14 +2,19 @@ package demo.nytimes.vishaan.com.newyorktimesdemo.ui.navigation.movies;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import demo.nytimes.vishaan.com.newyorktimesdemo.BuildConfig;
 import demo.nytimes.vishaan.com.newyorktimesdemo.NYTimesApplication;
 import demo.nytimes.vishaan.com.newyorktimesdemo.R;
@@ -23,10 +28,20 @@ import demo.nytimes.vishaan.com.newyorktimesdemo.utils.Util;
 import io.reactivex.Observable;
 
 public class MovieReviewsFragment extends BaseFragment implements iMoviePresenterInterface {
+    private MoviePresenter moviePresenter;
+    private MovieReviewsObject movieReviewsObject;
+
     @Inject
     NYTimesApi nyTimesApi;
 
-    private MoviePresenter moviePresenter;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+
+    @BindView(R.id.txt_title)
+    TextView titleTextView;
+
+    @BindView(R.id.txt_summary)
+    TextView summaryTextView;
 
     public MovieReviewsFragment() {
         // Required empty public constructor
@@ -44,7 +59,35 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_movie_reviews, container, false);
+        ButterKnife.bind(this, view);
+        setUpViewPager();
         return view;
+    }
+
+    private void setUpViewPager() {
+        //initialize viewpager
+        viewPager.setAdapter(new MoviePagerAdapter());
+        viewPager.addOnPageChangeListener(new OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (movieReviewsObject != null) {
+                    final List<Movie> movies = movieReviewsObject.getResults();
+                    if (movies != null) {
+                        bind(movies.get(position));
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -75,12 +118,28 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
 
     @Override
     public void onError(String message) {
-        Util.logDebug(getClass().getName(), message);
+        Util.logError(getClass().getName(), message);
     }
 
     @Override
     public void onMovies(MovieReviewsObject movieResponses) {
-        Util.logDebug(getClass().getName(), movieResponses.toString());
+        this.movieReviewsObject = movieResponses;
+        //save the movie response object
+        if (this.movieReviewsObject != null) {
+            //update the viewpager title and images via its adapter
+            final MoviePagerAdapter moviePagerAdapter = (MoviePagerAdapter) viewPager.getAdapter();
+            moviePagerAdapter.setMovieList(movieResponses.getResults());
+            bind(movieResponses.getResults().get(0));
+            moviePagerAdapter.notifyDataSetChanged();
+        } else {
+            //TODO send errors and crash reports to backend when created
+            Util.logError(getClass().getName(), "Could not load movie reviews.");
+        }
+    }
+
+    private void bind(Movie movie) {
+        titleTextView.setText(movie.getDisplayTitle());
+        summaryTextView.setText(movie.getSummary_short());
     }
 
     @Override

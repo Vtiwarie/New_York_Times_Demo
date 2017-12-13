@@ -53,5 +53,10 @@ dependencies {
     //Gson
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
 
+    //Image library
     implementation "com.squareup.picasso:picasso:${versions.picasso}"
+
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

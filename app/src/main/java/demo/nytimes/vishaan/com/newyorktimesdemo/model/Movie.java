@@ -8,9 +8,9 @@ public class Movie {
     private String display_title;
     private String headline;
     private String summary_short;
-    private Image link;
+    private Image multimedia;
 
-    public String getDisplay_title() {
+    public String getDisplayTitle() {
         return display_title;
     }
 
@@ -34,11 +34,11 @@ public class Movie {
         this.summary_short = summary_short;
     }
 
-    public Image getLink() {
-        return link;
+    public Image getMultimedia() {
+        return multimedia;
     }
 
-    public void setLink(Image link) {
-        this.link = link;
+    public void setMultimedia(Image multimedia) {
+        this.multimedia = multimedia;
     }
 }
