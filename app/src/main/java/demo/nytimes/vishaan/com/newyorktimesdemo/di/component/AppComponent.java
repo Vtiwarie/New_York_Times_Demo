@@ -13,10 +13,6 @@ import demo.nytimes.vishaan.com.newyorktimesdemo.di.module.NetworkModule;
 import demo.nytimes.vishaan.com.newyorktimesdemo.ui.navigation.NavigationActivity;
 import demo.nytimes.vishaan.com.newyorktimesdemo.ui.navigation.movies.MovieReviewsFragment;
 
-/**
- *
- *
- */
 @Singleton
 @Component(modules = {AppModule.class, NetworkModule.class, NYTimesModule.class})
 public interface AppComponent {
