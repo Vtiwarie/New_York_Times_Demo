@@ -35,8 +35,6 @@ public class FavoritesFragment extends BaseFragment implements iFavoritesPresent
     @BindView(R.id.recycler_favorites)
     RecyclerView recyclerView;
 
-    private List<Movie> movieList;
-
     private FavoritesPresenter favoritesPresenter;
 
     public FavoritesFragment() {
@@ -65,7 +63,6 @@ public class FavoritesFragment extends BaseFragment implements iFavoritesPresent
         getActivity().setTitle(R.string.title_favorites);
 
         favoritesPresenter = new FavoritesPresenter(this);
-        favoritesPresenter.onCreate();
     }
 
     private void setup() {
@@ -83,7 +80,7 @@ public class FavoritesFragment extends BaseFragment implements iFavoritesPresent
 
     @Override
     public void onCompleted() {
-
+        //do nothing
     }
 
     @Override

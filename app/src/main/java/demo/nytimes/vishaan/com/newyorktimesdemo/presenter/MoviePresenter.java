@@ -5,6 +5,9 @@ import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.interfaces.iMoviePres
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
+/**
+ * Presenter class for movies
+ */
 public class MoviePresenter extends BasePresenter implements Observer<MovieReviewsObject> {
 
     private iMoviePresenterInterface iMoviePresenterInterface;
@@ -24,7 +27,6 @@ public class MoviePresenter extends BasePresenter implements Observer<MovieRevie
     }
 
     public void fetchMovies() {
-        unSubscribeAll();
         subscribe(iMoviePresenterInterface.getMovies(), MoviePresenter.this);
     }
 

@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+/**
+ * Template class for creating activities that have one main fragment
+ */
 public abstract class BaseSingleFragmentActivity extends AppCompatActivity {
 
     @Override

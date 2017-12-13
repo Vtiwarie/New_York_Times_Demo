@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import au.com.gridstone.rxstore.Converter;
 import au.com.gridstone.rxstore.ListStore;
 import au.com.gridstone.rxstore.RxStore;
-import au.com.gridstone.rxstore.ValueStore;
 import au.com.gridstone.rxstore.converters.GsonConverter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +32,6 @@ import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.interfaces.iMoviePres
 import demo.nytimes.vishaan.com.newyorktimesdemo.ui.base.BaseFragment;
 import demo.nytimes.vishaan.com.newyorktimesdemo.utils.Util;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 
 public class MovieReviewsFragment extends BaseFragment implements iMoviePresenterInterface {
@@ -78,6 +76,7 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
     }
 
     private void setUpButtonHandler() {
+        //TODO saving user favorites should be handled via server-side database and not on the front-end, but is done here for demo purposes
         saveButton.setOnClickListener(view -> {
             Converter converter = new GsonConverter();
 
@@ -85,8 +84,10 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
             moviesStore.observe().subscribe(people -> {
             });
             final Movie currentMovie = movieReviewsObject.getResults().get(viewPager.getCurrentItem());
-            moviesStore.addOrReplace(currentMovie, Schedulers.trampoline(), value -> value.hashCode() == currentMovie.hashCode());
-            Util.toast(getActivity(), "Saved Movie");
+            if (currentMovie != null) {
+                moviesStore.addOrReplace(currentMovie, Schedulers.trampoline(), val -> val.getDisplayTitle().equals(currentMovie.getDisplayTitle()));
+                Util.toast(getActivity(), "Saved Movie");
+            }
         });
     }
 
@@ -96,7 +97,7 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
         viewPager.addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                //do nothing
             }
 
             @Override
@@ -111,7 +112,7 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                //do nothing
             }
         });
     }
@@ -128,7 +129,6 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
 
         //presentation
         moviePresenter = new MoviePresenter(MovieReviewsFragment.this);
-        moviePresenter.onCreate();
     }
 
     @Override
@@ -139,7 +139,7 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
 
     @Override
     public void onCompleted() {
-        //do nothing for now
+        //do nothing
     }
 
     @Override

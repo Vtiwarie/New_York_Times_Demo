@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/iv_favorite_image"
-        android:layout_width="@dimen/dimen_70dp"
+        android:layout_width="@dimen/dimen_105dp"
         android:layout_height="@dimen/dimen_105dp"
         android:scaleType="centerCrop" />
 

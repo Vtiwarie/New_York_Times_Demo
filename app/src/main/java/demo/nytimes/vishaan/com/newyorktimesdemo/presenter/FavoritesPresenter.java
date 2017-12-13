@@ -9,6 +9,9 @@ import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.interfaces.iMoviePres
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
+/**
+ * Presenter class for displaying favorites
+ */
 public class FavoritesPresenter extends BasePresenter implements Observer<List<Movie>> {
 
     private iFavoritesPresenterInterface iFavoritesPresenterInterface;
@@ -28,7 +31,6 @@ public class FavoritesPresenter extends BasePresenter implements Observer<List<M
     }
 
     public void fetchMovies() {
-        unSubscribeAll();
         subscribe(iFavoritesPresenterInterface.getMovies(), FavoritesPresenter.this);
     }
 
