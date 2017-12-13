@@ -8,6 +8,8 @@
 
     <!-- VIEWS -->
     <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_70dp">70dp</dimen>
+    <dimen name="dimen_105dp">105dp</dimen>
     <dimen name="dimen_140dp">140dp</dimen>
     <dimen name="dimen_210dp">210dp</dimen>
 

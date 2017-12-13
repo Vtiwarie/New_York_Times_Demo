@@ -2,7 +2,6 @@ package demo.nytimes.vishaan.com.newyorktimesdemo.presenter;
 
 import demo.nytimes.vishaan.com.newyorktimesdemo.model.MovieReviewsObject;
 import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.interfaces.iMoviePresenterInterface;
-import demo.nytimes.vishaan.com.newyorktimesdemo.ui.navigation.movies.MovieReviewsFragment;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 

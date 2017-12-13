@@ -1,6 +1,8 @@
 package demo.nytimes.vishaan.com.newyorktimesdemo.utils;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import demo.nytimes.vishaan.com.newyorktimesdemo.BuildConfig;
 
@@ -19,5 +21,9 @@ public class Util {
         if(BuildConfig.DEBUG) {
             Log.e(tag, message);
         }
+    }
+
+    public static void toast(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 }

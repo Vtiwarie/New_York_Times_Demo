@@ -7,12 +7,19 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import au.com.gridstone.rxstore.Converter;
+import au.com.gridstone.rxstore.ListStore;
+import au.com.gridstone.rxstore.RxStore;
+import au.com.gridstone.rxstore.ValueStore;
+import au.com.gridstone.rxstore.converters.GsonConverter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import demo.nytimes.vishaan.com.newyorktimesdemo.BuildConfig;
@@ -26,6 +33,8 @@ import demo.nytimes.vishaan.com.newyorktimesdemo.presenter.interfaces.iMoviePres
 import demo.nytimes.vishaan.com.newyorktimesdemo.ui.base.BaseFragment;
 import demo.nytimes.vishaan.com.newyorktimesdemo.utils.Util;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 
 public class MovieReviewsFragment extends BaseFragment implements iMoviePresenterInterface {
     private MoviePresenter moviePresenter;
@@ -42,6 +51,9 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
 
     @BindView(R.id.txt_summary)
     TextView summaryTextView;
+
+    @BindView(R.id.btn_save)
+    Button saveButton;
 
     public MovieReviewsFragment() {
         // Required empty public constructor
@@ -61,7 +73,21 @@ public class MovieReviewsFragment extends BaseFragment implements iMoviePresente
         View view = inflater.inflate(R.layout.fragment_movie_reviews, container, false);
         ButterKnife.bind(this, view);
         setUpViewPager();
+        setUpButtonHandler();
         return view;
+    }
+
+    private void setUpButtonHandler() {
+        saveButton.setOnClickListener(view -> {
+            Converter converter = new GsonConverter();
+
+            ListStore<Movie> moviesStore = RxStore.list(new File(getActivity().getFilesDir() + "/movies"), converter, Movie.class);
+            moviesStore.observe().subscribe(people -> {
+            });
+            final Movie currentMovie = movieReviewsObject.getResults().get(viewPager.getCurrentItem());
+            moviesStore.addOrReplace(currentMovie, Schedulers.trampoline(), value -> value.hashCode() == currentMovie.hashCode());
+            Util.toast(getActivity(), "Saved Movie");
+        });
     }
 
     private void setUpViewPager() {
