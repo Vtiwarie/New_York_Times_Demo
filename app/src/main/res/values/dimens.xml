@@ -7,6 +7,7 @@
     <dimen name="text_size_16sp">16sp</dimen>
 
     <!-- VIEWS -->
+    <dimen name="dimen_8dp">8dp</dimen>
     <dimen name="dimen_140dp">140dp</dimen>
     <dimen name="dimen_210dp">210dp</dimen>
 
